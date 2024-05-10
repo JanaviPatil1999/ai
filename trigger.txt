@@ -1,0 +1,28 @@
+trigger TeacherTrigger on Teacher__c (after insert) {
+    
+    if(trigger.isAfter && trigger.isInsert){
+    List<Subject_c> SubjectList = new List<Subject_c>();
+    for(Teacher__c teacherObj: trigger.new) {
+
+        Subject_c subjobj = new Subject_c();
+        subjobj.Name = 'Subject 1';
+        subjobj.Teacher__c=teacherObj.Id;
+        
+        SubjectList.add(subjObj);
+    }
+    insert SubjectList;
+    }
+    
+    if(trigger.isAfter && trigger.isUpdate){
+        List<Teacher_c> TeachersToUpdate = new List<Teacher_c>();
+        for(Teacher__c teacherObj2 : trigger.new)
+        {
+            if(teacherObj2.Last_Name__c == null){
+            teacherObj2.Last_Name__c = teacherObj2.Name;
+            TeachersToUpdate.add(teacherObj2);
+            }
+        }
+        update TeachersToUpdate;
+    }
+    
+}
