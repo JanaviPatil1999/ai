@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// Function to prompt the user for symptoms and return them as a vector of strings
+vector<string> getSymptoms() {
+    vector<string> symptoms;
+    string symptom;
+    cout << "Enter your symptoms (type 'done' to finish):\n";
+    while (true) {
+        cout << "> ";
+        getline(cin, symptom);
+        if (symptom == "done") {
+            break;
+        }
+        symptoms.push_back(symptom);
+    }
+    return symptoms;
+}
+
+// Function to determine if the user should go to the hospital based on symptoms
+bool shouldGoToHospital(const vector<string>& symptoms) {
+    // Check if any of the symptoms indicate a serious condition
+    for (const string& symptom : symptoms) {
+        if (symptom == "chest pain" || symptom == "difficulty breathing" || symptom == "unconsciousness") {
+            return true; // Recommend going to the hospital
+        }
+    }
+    return false; // No serious symptoms detected
+}
+
+int main() {
+    cout << "Welcome to the Hospital Expert System\n";
+    cout << "------------------------------------\n";
+
+    // Get symptoms from the user
+    vector<string> symptoms = getSymptoms();
+
+    // Determine if the user should go to the hospital
+    bool goToHospital = shouldGoToHospital(symptoms);
+
+    // Provide recommendation based on symptoms
+    if (goToHospital) {
+        cout << "\nBased on your symptoms, it's recommended to go to the hospital immediately.\n";
+    } else {
+        cout << "\nBased on your symptoms, you may not need to go to the hospital immediately. "
+             << "Consider seeking medical advice if your symptoms persist or worsen.\n";
+    }
+
+    return 0;
+}
